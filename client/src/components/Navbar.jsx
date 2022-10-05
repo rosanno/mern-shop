@@ -17,11 +17,10 @@ import { BsSearch, BsBag } from 'react-icons/bs';
 import { BiExit } from 'react-icons/bi';
 import { useSelector } from 'react-redux';
 import CustomModal from './CustomModal';
-import CustomDrawer from './CustomDrawer';
+import CartDrawer from './CartDrawer';
 import CustomSearch from './CustomSearch';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import MobileDrawer from './MobileDrawer';
-import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import { publicRequest } from '../api/axios';
 import { setUser } from '../features/authSlice';
 
@@ -30,7 +29,6 @@ const Navbar = () => {
   const auth = useSelector((state) => state.auth);
   const { onClose } = useDisclosure();
   const location = useLocation();
-  const privateRequest = useAxiosPrivate();
   const [open, setOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
@@ -131,7 +129,7 @@ const Navbar = () => {
                   marginLeft: '4px',
                 }}
               >
-                musichubs
+                EarSockets
               </Text>
             </Link>
             {location.pathname !== '/checkout' && (
@@ -238,7 +236,7 @@ const Navbar = () => {
         </Container>
       </Box>
       <CustomModal isOpen={openModal} setOpenModal={setOpenModal} />
-      <CustomDrawer isOpen={open} onClose={onClose} setOpen={setOpen} />
+      <CartDrawer isOpen={open} onClose={onClose} setOpen={setOpen} />
       <MobileDrawer
         isOpen={isDrawerOpen}
         onClose={onClose}

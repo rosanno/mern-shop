@@ -20,10 +20,12 @@ import { removeItems, setCart, setQuantity } from '../features/cartSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { BiTrashAlt } from 'react-icons/bi';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
+import { useLocation } from 'react-router-dom';
 
-const CustomDrawer = (props) => {
+const CartDrawer = (props) => {
   const btnRef = React.useRef();
   const dispatch = useDispatch();
+  const location = useLocation();
   const auth = useSelector((state) => state.auth);
   const cartItems = useSelector((state) => state.cart.items);
   const privateRequest = useAxiosPrivate();
@@ -44,7 +46,7 @@ const CustomDrawer = (props) => {
       }
     };
 
-    getItems();
+    location.pathname !== '/checkout-success' && getItems();
 
     return () => {
       isMounted = false;
@@ -324,22 +326,24 @@ const CustomDrawer = (props) => {
           <DrawerFooter
             sx={{
               display: 'flex',
-              justifyContent: 'space-between',
             }}
           >
-            <Text
-              sx={{
-                fontSize: {
-                  base: '.9rem',
-                  sm: '.8rem',
-                  md: '.9rem',
-                  lg: '1.2rem',
-                },
-                fontWeight: 'bold',
-              }}
-            >
-              Total: ${cartItems?.subTotal?.toFixed(2)}
-            </Text>
+            {cartItems.product?.length > 0 && (
+              <Text
+                sx={{
+                  fontSize: {
+                    base: '.9rem',
+                    sm: '.8rem',
+                    md: '.9rem',
+                    lg: '1.2rem',
+                  },
+                  fontWeight: 'bold',
+                }}
+                marginRight="auto"
+              >
+                Total: ${cartItems?.subTotal?.toFixed(2)}
+              </Text>
+            )}
             <Button
               sx={{
                 textTransform: 'uppercase',
@@ -348,6 +352,7 @@ const CustomDrawer = (props) => {
               }}
               isLoading={isLoading}
               onClick={handleCheckout}
+              disabled={cartItems.product?.length === 0 && 'true'}
             >
               Checkout
             </Button>
@@ -358,4 +363,4 @@ const CustomDrawer = (props) => {
   );
 };
 
-export default CustomDrawer;
+export default CartDrawer;

@@ -1,5 +1,5 @@
 import { Box, Button, Container, Text } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { BsBagCheckFill } from 'react-icons/bs';
@@ -7,38 +7,31 @@ import useAxiosPrivate from '../hooks/useAxiosPrivate';
 
 const Success = () => {
   const auth = useSelector((state) => state.auth);
-  const navigate = useNavigate();
   const privateRequest = useAxiosPrivate();
-  const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     let isMounted = true;
     const controller = new AbortController();
 
-    const getSessions = async () => {
-      setIsLoading(true);
+    const cleartCart = async () => {
       try {
-        const res = await privateRequest.get(
-          `stripe-checkout/checkout/sessions/${JSON.parse(
-            localStorage.getItem('payment_id')
-          )}`,
-          {
-            signal: controller.signal,
-          }
-        );
+        const res = await privateRequest.delete('cart/clearCart', {
+          signal: controller.signal,
+        });
         isMounted && console.log(res.data);
-        setIsLoading(false);
       } catch (error) {
         console.log(error);
       }
     };
 
-    getSessions();
+    cleartCart();
 
     return () => {
       isMounted = false;
       controller.abort();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -51,13 +44,21 @@ const Success = () => {
           backgroundColor: '#DDDCDD',
           width: '70%',
           margin: '0 auto',
-          padding: '3rem 0',
           borderRadius: '10px',
+        }}
+        padding={{
+          base: '3rem 2rem',
+          md: '3rem 0',
         }}
       >
         <BsBagCheckFill color="#2F855A" fontSize="1.8rem" />
         <Text
-          fontSize="5xl"
+          fontSize={{
+            base: 'xl',
+            sm: '2xl',
+            md: '4xl',
+            lg: '5xl',
+          }}
           textTransform="capitalize"
           fontWeight="500"
           lineHeight="1.1"
