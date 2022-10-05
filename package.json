@@ -6,6 +6,6 @@
   },
   "scripts": {
     "dev": "concurrently \"cd client && yarn dev\" \"cd server && yarn dev\"",
-    "start": "concurrently \"cd client && npm run start\" \"cd server && npm run start\""
+    "start": "concurrently \"cd client && yarn start\" \"cd server && yarn start\""
   }
 }
