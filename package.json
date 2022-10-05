@@ -5,6 +5,7 @@
     "concurrently": "^7.3.0"
   },
   "scripts": {
-    "dev": "concurrently \"cd client && yarn dev\" \"cd server && yarn dev\""
+    "dev": "concurrently \"cd client && yarn dev\" \"cd server && yarn dev\"",
+    "start": "concurrently \"cd client && yarn dev\" \"cd server && yarn dev\""
   }
 }
