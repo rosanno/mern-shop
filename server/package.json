@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon app.js",
+    "start": "nodemon app.js",
     "test": "jest"
   },
   "jest": {
